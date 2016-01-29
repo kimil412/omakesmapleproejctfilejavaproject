@@ -373,7 +373,8 @@ public class LogstashClientMaker {
         contentStringBuffer.append("lumberjack {").append("\n");
         contentStringBuffer.append("    hosts => ['192.168.8.129']").append("\n");
         contentStringBuffer.append("    port => 2323").append("\n");
-        contentStringBuffer.append("    ssl_certificate => \"E:\\\\ichatt_pc\\\\workspaces_git\\\\ToMakeSampleProjectFileJavaProejct\\\\project").append(ith).append("\\\\lumberjack.crt\"").append("\n");
+        //contentStringBuffer.append("    ssl_certificate => \"E:\\\\ichatt_pc\\\\workspaces_git\\\\ToMakeSampleProjectFileJavaProejct\\\\project").append(ith).append("\\\\lumberjack.crt\"").append("\n");
+        contentStringBuffer.append("    ssl_certificate => \"").append(System.getProperty("user.dir")).append("\\\\project").append(ith).append("\\\\lumberjack.crt\"").append("\n");
         contentStringBuffer.append("}").append("\n");
         
         contentStringBuffer.append("}").append("\n");
@@ -430,7 +431,7 @@ public class LogstashClientMaker {
         final String log4jScriptPath = "copy_for_log4j.script";
         
         Path scriptPath = Paths.get(System.getProperty("user.dir") + File.separator);
-        scriptPath = Paths.get(scriptPath.toString(), logbackScriptPath);
+        scriptPath = Paths.get(scriptPath.toString(), log4jScriptPath);
         
         Path targetFilePath = Paths.get(System.getProperty("user.dir") + File.separator +"project"+ith + File.separator +"build.gradle");
         
@@ -526,6 +527,14 @@ public class LogstashClientMaker {
         loggerTag.appendChild(appenderRefTag);
         mainRootElement.appendChild(loggerTag);
         
+        Element appenderLoggerTag = makeElementWithNameOptionsText(document, "logger", new String[]{"name", "appenderlogger", "level", "DEBUG"},  null);
+        appenderRefTag = makeElementWithNameOptionsText(document, "appender-ref", new String[]{"ref", "stash"}, null);
+        Element appenderRefTag2 = makeElementWithNameOptionsText(document, "appender-ref", new String[]{"ref", "SOCKET"}, null);
+        
+        appenderLoggerTag.appendChild(appenderRefTag);
+        appenderLoggerTag.appendChild(appenderRefTag2);
+        mainRootElement.appendChild(appenderLoggerTag);        
+        
         Element rootTag = makeElementWithNameOptionsText(document, "root", new String[]{"level", "INFO"}, null);
         appenderRefTag = makeElementWithNameOptionsText(document, "appender-ref", new String[]{"ref", "stash"}, null);
         
@@ -613,8 +622,9 @@ public class LogstashClientMaker {
         contentStringBuffer.append("log4j.rootLogger=DEBUG, server").append("\n");
         contentStringBuffer.append("log4j.appender.server=org.apache.log4j.net.SocketAppender").append("\n");
         contentStringBuffer.append("log4j.appender.server.Port=").append(startLog4jPortNumber+ith).append("\n");
-        contentStringBuffer.append("og4j.appender.server.RemoteHost=localhost").append("\n");
+        contentStringBuffer.append("log4j.appender.server.RemoteHost=localhost").append("\n");
         contentStringBuffer.append("log4j.appender.server.ReconnectionDelay=10000").append("\n");
+        contentStringBuffer.append("log4j.logger.appenderlogger=DEBUG, server").append("\n");
         /**
          * 
         log4j.rootLogger=DEBUG, server

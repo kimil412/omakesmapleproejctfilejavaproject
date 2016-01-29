@@ -17,7 +17,7 @@ public class LoggerFactorySkeleton {
     }
 
     public Logger getLogger() {
-        return LoggerFactory.getLogger(LoggerFactorySkeleton.class);
+        return LoggerFactory.getLogger("appenderlogger");
     }
     
     public String getLoggerImplementationLibraryName(){

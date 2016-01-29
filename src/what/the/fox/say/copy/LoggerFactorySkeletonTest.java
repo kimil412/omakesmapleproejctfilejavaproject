@@ -16,7 +16,7 @@ public class LoggerFactorySkeletonTest {
 
     @Test
     public void logstashWriteTest() {
-        justCallTestMethod(0, 8000);
+        justCallTestMethod(0, 9000);
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e1) {
