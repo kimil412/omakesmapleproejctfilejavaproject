@@ -1,0 +1,3 @@
+Hi man ! thisi snew text!
+:wq
+
